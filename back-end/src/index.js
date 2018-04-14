@@ -80,13 +80,14 @@ const customPlugins = async server => {
 export default async () => {
 
   const options = {
+    port,
     router: {
       isCaseSensitive: false,
     },
     routes: {
       cors: true,
       validate: {
-        failAction: relish.failAction,
+
         options: {
           abortEarly: false
         }

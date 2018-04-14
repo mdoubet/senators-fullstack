@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "MONGO_URI=mongodb://??? node .",
+    "start": "MONGO_URI=mongodb://matt:weee!@ds157342.mlab.com:57342/helio PORT=8811 node .",
     "start:dev": "babel-watch . --watch src",
     "prepublish": "npm run transpile",
     "test": "mocha test/**/*.test.js",
