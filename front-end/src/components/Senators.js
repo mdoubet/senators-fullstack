@@ -32,30 +32,30 @@ export default class extends Component {
             ssValue: ''
         }
     }
-
+    senatorCollection = Array().push( ...senators);
     handleSearch(event){
         this.setState({ssValue: event.target.value});
     }
 
     repubFilter = () => {
-        this.setState({curSenators: senators.filter((senator) => senator.party.match('Republican'))})
+        this.setState({curSenators: this.senatorCollection.filter((senator) => senator.party.match('Republican'))})
     }
     demFilter = () => {
-        this.setState({curSenators: senators.filter((senator) => senator.party.match('Democrat'))})
+        this.setState({curSenators: this.senatorCollection.filter((senator) => senator.party.match('Democrat'))})
     }
     indyFilter =()=>{
-        this.setState({curSenators: senators.filter((senator) => senator.party.match('Independent'))})
+        this.setState({curSenators: this.senatorCollection.filter((senator) => senator.party.match('Independent'))})
     }
     resetSenators= () => {
-        this.setState({curSenators: senators})
+        this.setState({curSenators: this.senatorCollection})
     }
 
     utahFilter =()=> {
-        this.setState({curSenators: senators.filter((senator) => senator.state.match('UT'))})
+        this.setState({curSenators: this.senatorCollection.filter((senator) => senator.state.match('UT'))})
 
     }
     seniorUTFilter =()=> {
-        this.setState({curSenators: senators.filter((senator) => senator.state.match('UT')&& senator.senator_rank.match('senior'))})
+        this.setState({curSenators: this.senatorCollection.filter((senator) => senator.state.match('UT')&& senator.senator_rank.match('senior'))})
 
     }
 
@@ -92,7 +92,7 @@ export default class extends Component {
 
   async componentDidMount() {
     const mongoFetch = await getSenators();
-    const senators = Object.values(mongoFetch);
+    this.senatorCollection = Object.values(mongoFetch);
     //this.setState({senate: senators.map(senator => <Senator senator={senator}/>)});
     this.setState({curSenators: senators});
 
@@ -107,7 +107,7 @@ export default class extends Component {
 
 
   render () {
-    const senators = this.renderSenators()
+    const renderSenators = this.renderSenators()
       const styles = {
           root: {
               display: 'flex',
@@ -146,7 +146,7 @@ export default class extends Component {
               </div>
               <div style = {styles.root}>
                 <GridList cols={'auto'} cellHeight={'auto'} style = {styles.gridList}>
-                  {senators}
+                  {renderSenators}
                 </GridList>
               </div>
           </MuiThemeProvider>
