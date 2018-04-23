@@ -8,7 +8,7 @@ import SenatePlugin from './plugins/senate'
 const relish = Relish()
 
 const env = process.env.NODE_ENV || 'development'
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5000;
 const mongoUri = process.env.MONGO_URI
 
 if(!mongoUri)

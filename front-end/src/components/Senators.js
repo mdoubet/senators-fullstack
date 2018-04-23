@@ -1,9 +1,16 @@
 import React, { Component } from 'react'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import GridList, {GridTile} from 'material-ui/GridList'
 import senators from '../data/senators'
 import {getSenators, postSenators} from "../data/mongodb";
 
+
 import Senatorsearcher from './Senatorsearcher'
 import Senator from './Senator'
+import SenatorCard from './SenatorCard'
+
+
+
 
 export default class extends Component {
   // state = {
@@ -60,7 +67,7 @@ export default class extends Component {
         }
         return (
 
-            this.state.curSenators.filter((senator) => { return (
+                this.state.curSenators.filter((senator) => { return (
                 senator.person.firstname.toLowerCase().match(this.state.ssValue.toLowerCase()) ||
                 senator.person.lastname.toLowerCase().match(this.state.ssValue.toLowerCase()) ||
                 senator.person.nickname.toLowerCase().match(this.state.ssValue.toLowerCase())
@@ -69,8 +76,14 @@ export default class extends Component {
                 .map(senator => {
 
                         return(
-                            <Senator senator={senator}/>);
+
+                              <SenatorCard senator={senator}/>
+
+
+
+                        );
                     }
+
 
                     //     {/**/}
                 )
@@ -95,7 +108,21 @@ export default class extends Component {
 
   render () {
     const senators = this.renderSenators()
-    
+      const styles = {
+          root: {
+              display: 'flex',
+              justifyContent: 'center',
+              flexFlow: 'column wrap'
+
+          },
+          gridList: {
+              flexDirection: 'row',
+              justifyContent:'center',
+              webkitColumnCount: '3',
+              columnCount: '3',
+              overflowY: 'auto'
+          },
+      };
     // return (
     //   <div>
     //       <button onClick = {this.postSenate}>Post Senate</button>
@@ -106,8 +133,8 @@ export default class extends Component {
     // );
 
       return (
-          <div>
-              <div>
+          <MuiThemeProvider>
+              <div style = {{textAlign : "center", minWidth:"325px", padding:"0px"}}>
                   <Senatorsearcher value = { this.state.ssValue }  onChange = {this.handleSearch}/>
                   <input type = "button" value="Everybody" onClick={this.resetSenators}/>
                   <input type = "button" value="Repubs" onClick={this.repubFilter}/>
@@ -117,10 +144,12 @@ export default class extends Component {
                   <input type = "button" value="senior UT" onClick={this.seniorUTFilter}/>
 
               </div>
-              <div>
+              <div style = {styles.root}>
+                <GridList cols={'auto'} cellHeight={'auto'} style = {styles.gridList}>
                   {senators}
+                </GridList>
               </div>
-          </div>
+          </MuiThemeProvider>
       );
     }
 }
